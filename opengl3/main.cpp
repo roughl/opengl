@@ -375,6 +375,7 @@ int main(void)
 	for( int i=0; i<numberOfExtensions; i++ ) {
 		cout << glGetStringi( GL_EXTENSIONS, i ) << " ";
 	}
+	cout << endl;
 	
 	InitGLStates();
 	atexit(glCleanup);
@@ -387,6 +388,8 @@ int main(void)
 	
 	createGeometry();
 	SDL_Event event;
+	Uint32 OldTime = SDL_GetTicks();
+	Uint32 frames = 0;
 	for(bool done; !done;) {
 		if(SDL_PollEvent(&event)) {
 			switch(event.type) {
@@ -397,6 +400,14 @@ int main(void)
 		}
 
 		display();
+		Uint32 Time = SDL_GetTicks();
+		Uint32 diff = Time-OldTime;
+		frames++;
+		if(diff > 5000) {
+			cout << frames << " frames in " << (double)diff/1000.0 << " seconds FPS: " << (double)frames*1000/(double)(diff) << endl;
+			OldTime = Time;
+			frames=0;
+		}
 	};
 	return 0;
 }
