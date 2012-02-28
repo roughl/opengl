@@ -1,5 +1,5 @@
 //[FRAGMENT SHADER]
-#version 330
+#version 130
  
  
 smooth in vec4 Color;
